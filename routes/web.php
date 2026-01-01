@@ -2,10 +2,19 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BateauController;
+
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('accueil');
+})->name('home');
+
+
+// 2. Les routes pour les Bateaux
+Route::get('/bateaux', [BateauController::class, 'index'])->name('bateaux.index');
+Route::get('/bateaux/ajouter', [BateauController::class, 'create'])->name('bateaux.create');
+Route::post('/bateaux', [BateauController::class, 'store'])->name('bateaux.store');
+Route::get('/bateaux/{id}', [BateauController::class, 'show'])->name('bateaux.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
