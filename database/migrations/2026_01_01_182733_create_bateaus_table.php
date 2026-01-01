@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bateaus', function (Blueprint $table) {
+        Schema::create('bateaux', function (Blueprint $table) {
             $table->id();
+            $table->string('nom');
+            $table->float('longueur');
+            $table->float('largeur');
+            $table->text('equipements');
+            $table->text('details');
+            $table->string('image_url')->nullable();
             $table->timestamps();
         });
     }
