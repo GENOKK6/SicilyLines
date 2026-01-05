@@ -10,14 +10,15 @@ Route::get('/', function () {
 })->name('home');
 
 
-// 2. Les routes pour les Bateaux
+
 Route::get('/bateaux', [BateauController::class, 'index'])->name('bateaux.index');
 Route::get('/bateaux/ajouter', [BateauController::class, 'create'])->name('bateaux.create');
 Route::post('/bateaux', [BateauController::class, 'store'])->name('bateaux.store');
 Route::get('/bateaux/{id}', [BateauController::class, 'show'])->name('bateaux.show');
+Route::delete('/bateaux/{id}', [BateauController::class, 'destroy'])->name('bateaux.destroy');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->route('bateaux.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

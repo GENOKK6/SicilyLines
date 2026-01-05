@@ -11,13 +11,13 @@ class BateauController extends Controller
     public function index()
     {
         $bateaux = Bateau::all();
-        return view('bateaux.index', ['bateaux' => $bateaux]);
+        return view('index', ['bateaux' => $bateaux]);
     }
 
 
     public function create()
     {
-        return view('bateaux.create');
+        return view('create');
     }
 
 
@@ -39,5 +39,13 @@ class BateauController extends Controller
     {
         $bateau = Bateau::findOrFail($id);
         return view('bateaux.show', ['bateau' => $bateau]);
+    }
+
+
+    public function destroy($id)
+    {
+        $bateau = Bateau::findOrFail($id);
+        $bateau->delete();
+        return redirect()->route('bateaux.index');
     }
 }
