@@ -6,16 +6,6 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
-    'providers' => ServiceProvider::defaultProviders()->merge([
-        /*
-     * Package Service Providers...
-     */
-        Barryvdh\DomPDF\ServiceProvider::class,
-    ])->toArray(),
-
-    'aliases' => Facade::defaultAliases()->merge([
-        'PDF' => Barryvdh\DomPDF\Facade::class,
-    ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------
