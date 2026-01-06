@@ -25,7 +25,10 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-5 py-3">
         <div class="container">
-            <a class="navbar-brand fw-bold text-primary" href="#">⚓ SicilyLines</a>
+            <div class="navbar-brand">
+                <img src="{{ asset('Image/logo.png') }}" alt="Logo SicilyLines" style="height: 60px; width: auto;">
+            </div>
+
             <div class="collapse navbar-collapse justify-content-end">
                 <div class="navbar-nav nav-pills">
                     <a class="nav-link bg-light text-dark" href="{{ route('home') }}">Page d'accueil</a>
@@ -42,8 +45,10 @@
                 <div class="form-card">
                     <h2 class="mb-4 text-center text-secondary">Ajouter un nouveau navire</h2>
 
-                    <form action="{{ route('bateaux.store') }}" method="POST">
-                        @csrf <div class="mb-3">
+                    <form action="{{ route('bateaux.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf 
+                        
+                        <div class="mb-3">
                             <label class="form-label fw-bold">Nom du bateau</label>
                             <input type="text" name="nom" class="form-control" placeholder="Ex: Le Concordia" required>
                         </div>
@@ -57,6 +62,11 @@
                                 <label class="form-label fw-bold">Largeur (m)</label>
                                 <input type="number" step="0.01" name="largeur" class="form-control" placeholder="Ex: 25.0" required>
                             </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Photo du bateau</label>
+                            <input type="file" name="image" class="form-control">
                         </div>
 
                         <div class="mb-3">

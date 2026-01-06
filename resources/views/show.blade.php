@@ -2,74 +2,84 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails du Bateau - {{ $bateau->nom }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { font-family: sans-serif; padding: 20px; background-color: #f3f4f6; }
-        .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .top-menu { margin-bottom: 20px; }
-        .content-grid { display: flex; gap: 30px; }
-        .image-box { flex: 1; } /* Prend 50% de la place */
-        .info-box { flex: 1; }  /* Prend 50% de la place */
+        body { background-color: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+        .nav-pills .nav-link { border-radius: 20px; font-weight: bold; margin-left: 10px; }
         
-        img { width: 100%; border-radius: 8px; }
-        
-        .label { font-weight: bold; color: #555; }
-        .data { color: #1e3a8a; font-weight: bold; font-size: 1.1em; }
-        
-        .btn-delete { background-color: #ef4444; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; }
-        .btn-delete:hover { background-color: #dc2626; }
+        /* Style pour coller à ton prototype Uizard */
+        .boat-detail-img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 25px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .specs-sidebar {
+            background-color: #e0f2fe; /* Le bleu ciel du bloc caractéristiques */
+            border-radius: 25px;
+            padding: 40px;
+            height: 100%;
+        }
+        .spec-label { font-weight: bold; color: #333; display: block; margin-top: 15px; }
+        .spec-value { color: #1e3a8a; font-weight: bold; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="top-menu">
-            <a href="{{ route('bateaux.index') }}">← Retour à la liste</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-5 py-3">
+        <div class="container">
+            <div class="navbar-brand">
+                <img src="{{ asset('Image/logo.png') }}" alt="Logo SicilyLines" style="height: 60px; width: auto;">
+            </div>
+            <div class="collapse navbar-collapse justify-content-end">
+                <div class="navbar-nav nav-pills">
+                    <a class="nav-link bg-light text-dark" href="{{ route('home') }}">Page d'accueil</a>
+                    <a class="nav-link bg-light text-dark" href="{{ route('bateaux.create') }}">Ajout de bateau</a>
+                    <a class="nav-link bg-info text-white active" href="{{ route('bateaux.index') }}">Listes Bateaux</a>
+                </div>
+            </div>
         </div>
+    </nav>
 
-        <h1>{{ $bateau->nom }}</h1>
-        <hr>
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-7">
+                @if($bateau->image_url)
+                    <img src="{{ asset('storage/' . $bateau->image_url) }}" class="boat-detail-img mb-4" alt="{{ $bateau->nom }}">
+                @else
+                    <img src="{{ asset('Image/bateau3.jpg') }}" class="boat-detail-img mb-4" alt="Image par défaut">
+                @endif
 
-        <div class="content-grid">
-            <div class="image-box">
-                <img src="https://via.placeholder.com/600x400" alt="Photo du bateau">
-                
-                <h3 style="margin-top: 20px;">Détails du Bateau</h3>
-                <p>{{ $bateau->details }}</p>
+                <h2 class="fw-bold mb-3">Détails du Bateau</h2>
+                <p class="text-muted fs-5" style="line-height: 1.8;">
+                    {{ $bateau->details ?? 'Ce navire moderne est parfaitement équipé pour assurer votre confort durant la traversée.' }}
+                </p>
             </div>
 
-            <div class="info-box" style="background-color: #e0f2fe; padding: 20px; border-radius: 8px;">
-                <h2>Caractéristiques :</h2>
-                
-                <p>
-                    <span class="label">Longueur :</span> <br>
-                    <span class="data">{{ $bateau->longueur }} mètres</span>
-                </p>
-
-                <p>
-                    <span class="label">Largeur :</span> <br>
-                    <span class="data">{{ $bateau->largeur }} mètres</span>
-                </p>
-
-                <p>
-                    <span class="label">Équipements :</span> <br>
-                    <span>{{ $bateau->equipements }}</span>
-                </p>
-
-                <br><hr><br>
-
-                <div style="display: flex; gap: 10px;">
+            <div class="col-lg-5">
+                <div class="specs-sidebar shadow-sm">
+                    <h2 class="fw-bold mb-4">Caractéristiques :</h2>
                     
-                    <a href="#" style="background-color: #fbbf24; padding: 10px 20px; text-decoration: none; color: black; border-radius: 5px;">
-                        Modifier
-                    </a>
+                    <span class="spec-label">Longueur :</span>
+                    <span class="spec-value">{{ $bateau->longueur }} mètres</span>
 
-                    <form action="{{ route('bateaux.destroy', $bateau->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce bateau ?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-delete">Supprimer</button>
-                    </form>
+                    <span class="spec-label">Largeur :</span>
+                    <span class="spec-value">{{ $bateau->largeur }} mètres</span>
 
+                    <span class="spec-label">Équipement :</span>
+                    <span class="spec-value text-dark">{{ $bateau->equipements ?? 'Bar, Restaurant, Wi-Fi' }}</span>
+
+                    <div class="mt-5 d-grid gap-2">
+                        <a href="{{ route('bateaux.index') }}" class="btn btn-outline-primary rounded-pill py-2 fw-bold">Retour à la liste</a>
+                        <form action="{{ route('bateaux.destroy', $bateau->id) }}" method="POST" onsubmit="return confirm('Supprimer ce navire ?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger w-100 rounded-pill py-2 fw-bold">Supprimer le bateau</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
