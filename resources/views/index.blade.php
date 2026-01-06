@@ -45,7 +45,7 @@
                 <div class="navbar-nav nav-pills">
                     <a class="nav-link bg-light text-dark" href="{{ route('home') }}">Page d'accueil</a>
                     <a class="nav-link bg-info text-white" href="{{ route('bateaux.create') }}">Ajout de bateau</a>
-                    <a class="nav-link bg-light text-dark" href="#">Générer le PDF</a>
+                    <a class="nav-link bg-light text-dark" href="{{ route('test.pdf') }}">Générer le PDF</a>
                     <a class="nav-link bg-light text-dark active" href="{{ route('bateaux.index') }}">Listes Bateaux</a>
                     
                     @auth

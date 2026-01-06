@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BateauController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 Route::get('/', function () {
@@ -30,3 +31,5 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('comptes', function () {})->middleware('auth');
+
+Route::get('pdf', [BateauController::class, 'creerPDF'])->name("pdf");
